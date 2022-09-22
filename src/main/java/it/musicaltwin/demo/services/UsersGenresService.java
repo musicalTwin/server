@@ -2,7 +2,6 @@ package it.musicaltwin.demo.services;
 
 import it.musicaltwin.demo.entities.Users;
 import it.musicaltwin.demo.entities.UsersGenres;
-import it.musicaltwin.demo.repositories.GenresRepository;
 import it.musicaltwin.demo.repositories.UsersGenresRepository;
 
 import java.util.List;

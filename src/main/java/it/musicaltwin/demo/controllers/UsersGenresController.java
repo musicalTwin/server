@@ -2,7 +2,6 @@ package it.musicaltwin.demo.controllers;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import it.musicaltwin.demo.entities.Genres;
 import it.musicaltwin.demo.entities.Users;
 import it.musicaltwin.demo.entities.UsersGenres;
-import it.musicaltwin.demo.repositories.GenresRepository;
-import it.musicaltwin.demo.repositories.UsersGenresRepository;
 import it.musicaltwin.demo.services.GenresService;
 import it.musicaltwin.demo.services.UserService;
 import it.musicaltwin.demo.services.UsersGenresService;
