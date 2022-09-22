@@ -10,4 +10,8 @@ import it.musicaltwin.demo.entities.UsersGenres;
 public interface UsersGenresRepository extends JpaRepository<UsersGenres, Long> {
     @Query(value = "SELECT * FROM users_genres u_g WHERE u_g.user_id = ?1", nativeQuery = true)
     List<UsersGenres> findListenedGenres(String userId);
+
+    @Query(value = "SELECT users_genres_id FROM users_genres u_g WHERE u_g.user_id = ?1", nativeQuery = true)
+    List<Long> findAllIdFromUserId(String userId);
+
 }

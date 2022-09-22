@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.services;
 
+import it.musicaltwin.demo.entities.Users;
 import it.musicaltwin.demo.entities.UsersGenres;
 import it.musicaltwin.demo.repositories.UsersGenresRepository;
 
@@ -14,11 +15,26 @@ public class UsersGenresService {
     private final UsersGenresRepository usersGenresRepository;
 
     @Autowired
-    public UsersGenresService (UsersGenresRepository usersGenresRepository) {
+    public UsersGenresService(UsersGenresRepository usersGenresRepository) {
         this.usersGenresRepository = usersGenresRepository;
     }
 
     public List<UsersGenres> getListenedGenres(String userId) {
         return usersGenresRepository.findListenedGenres(userId);
     }
+
+    public void addToDatabase(UsersGenres usersGenres) {
+        usersGenresRepository.save(usersGenres);
+    }
+
+    public void removeUserFromDatabase(Users user) {
+        List<Long> ids = usersGenresRepository.findAllIdFromUserId(user.getId());
+        usersGenresRepository.deleteAllById(ids);
+    }
+
+    public Boolean checkIfUserInDb(Users user) {
+        List<Long> usersGenres = usersGenresRepository.findAllIdFromUserId(user.getId());
+        return !usersGenres.isEmpty();
+    }
+
 }

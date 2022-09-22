@@ -1,25 +1,13 @@
-// package it.musicaltwin.demo.repositories;
+package it.musicaltwin.demo.repositories;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-// import javax.persistence.Table;
+import it.musicaltwin.demo.entities.Genres;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+public interface GenresRepository extends JpaRepository<Genres, Long> {
 
-// @Table(name = "genres")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class GenresRepository {
+    @Query(value = "SELECT * FROM genres gen WHERE gen.genre_name = ?1", nativeQuery = true)
+    Genres findByGenreName(String genreName);
 
-//     @Column(name = "genre_id")
-//     private Long id;
-
-//     @Column(name = "genre_name", nullable = false)
-//     private String name;
-
-// }
+}
