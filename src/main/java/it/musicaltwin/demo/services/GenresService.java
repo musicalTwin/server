@@ -1,25 +1,23 @@
-// package it.musicaltwin.demo.services;
+package it.musicaltwin.demo.services;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
+import it.musicaltwin.demo.entities.Genres;
+import it.musicaltwin.demo.repositories.GenresRepository;
 
-// import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+@Service
+public class GenresService {
 
-// @Table(name = "genres")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class GenresService {
+    @Autowired
+    private final GenresRepository genresRepository;
 
-//     @Column(name = "genre_id")
-//     private Long id;
+    public GenresService(GenresRepository genresRepository) {
+        this.genresRepository = genresRepository;
+    }
 
-//     @Column(name = "genre_name", nullable = false)
-//     private String name;
+    public Genres findByName(String name) {
+        return genresRepository.findByGenreName(name);
+    }
 
-// }
+}

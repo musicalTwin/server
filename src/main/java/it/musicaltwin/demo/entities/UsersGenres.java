@@ -3,9 +3,11 @@ package it.musicaltwin.demo.entities;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -22,8 +24,8 @@ import lombok.NoArgsConstructor;
 public class UsersGenres {
 
     @Id
-    @GeneratedValue
     @Column(name = "users_genres_id")
+    @GeneratedValue(generator = "users_genres_id", strategy = GenerationType.TABLE)
     @JsonIgnore
     private Long id;
 
@@ -35,5 +37,10 @@ public class UsersGenres {
     @ManyToOne
     @JoinColumn(name = "genre_id", nullable = false)
     private Genres genre;
+
+    public UsersGenres(Users user, Genres genre) {
+        this.user = user;
+        this.genre = genre;
+    }
 
 }

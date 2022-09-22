@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.jpa.repository.Query;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,4 +26,11 @@ public class Genders {
 
     @Column(name = "gender_name", nullable = false)
     private String name;
+
+    // public Genders(Long id) {
+    // this.id = id;
+    // this.name = getName();
+    // }
+
+
 }

@@ -27,4 +27,8 @@ public class UserService {
     public Optional<Users> getUserInfoById(String userId) {
         return userRepository.findById(userId);
     }
+
+    public void addUser(Users user) {
+        userRepository.save(user);
+    }
 }
