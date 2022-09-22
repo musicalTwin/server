@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,8 +38,17 @@ public class UsersGenresController {
     }
 
     @GetMapping(path = "{userId}")
-    public List<UsersGenres> getListenedGenres(@PathVariable("userId") String userId) {
-        return usersGenresService.getListenedGenres(userId);
+    public Map<String, String> getListenedGenres(@PathVariable("userId") String userId) {
+        List<UsersGenres> genres = usersGenresService.getListenedGenres(userId);
+        HashMap<String, String> formattedGenre = new HashMap<String, String>();
+        
+        int j = 0;
+        for(int i = 0; i < genres.size(); i++) {
+            j++;
+            formattedGenre.put("Genre name " + j, genres.get(i).getGenre().getGenreName().toString());
+        }
+
+        return formattedGenre;
     }
 
     @PostMapping
