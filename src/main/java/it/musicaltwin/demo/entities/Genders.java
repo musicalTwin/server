@@ -25,9 +25,8 @@ public class Genders {
     @Column(name = "gender_name", nullable = false)
     private String name;
 
-    // public Genders(Long id) {
-    // this.id = id;
-    // this.name = getName();
-    // }
+    public Genders(Long id) {
+        this.id = id;
+    }
 
 }

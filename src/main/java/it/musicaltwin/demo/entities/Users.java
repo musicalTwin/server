@@ -29,4 +29,8 @@ public class Users {
     @JoinColumn(name = "gender_id", nullable = false)
     private Genders gender;
 
+    public Users(String id) {
+        this.id = id;
+    }
+
 }

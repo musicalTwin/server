@@ -9,3 +9,17 @@ Content-Type: application/json
         "name": "Maschio"
     }
 }
+
+###
+
+POST http://localhost:5000/api/v1/intrested-in
+Content-Type: application/json
+
+{
+    "user": {
+        "id": "21u4ax3hxvenml3p7kdvrjlba"
+    },
+    "gender": {
+        "id": 4
+    }
+}

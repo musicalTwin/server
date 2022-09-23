@@ -24,12 +24,12 @@ public class GendersController {
 
     @GetMapping("name/{genderName}")
     public Genders getByName(@PathVariable(name = "genderName") String name) {
-        return gendersService.getByName(name);
+        return gendersService.getByName(name).orElse(new Genders());
     }
 
     @GetMapping("id/{genderId}")
     public Genders getById(@PathVariable(name = "genderId") Long id) {
-        return gendersService.getById(id);
+        return gendersService.getById(id).orElse(new Genders());
     }
 
     @GetMapping

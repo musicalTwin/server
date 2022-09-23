@@ -10,9 +10,9 @@ import it.musicaltwin.demo.services.GenresService;
 @RequestMapping(path = "api/v1/users")
 public class GenresController {
 
-    @Autowired
     private final GenresService genresService;
 
+    @Autowired
     public GenresController(GenresService genresService) {
         this.genresService = genresService;
     }

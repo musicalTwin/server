@@ -4,6 +4,7 @@ import it.musicaltwin.demo.entities.Genders;
 import it.musicaltwin.demo.repositories.GendersRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,16 +19,16 @@ public class GendersService {
         this.gendersRepository = gendersRepository;
     }
 
-    public Genders getByName(String name) {
-        return gendersRepository.getByName(name).orElse(new Genders());
+    public Optional<Genders> getByName(String name) {
+        return gendersRepository.getByName(name);
     }
 
     public List<Genders> getAllGenders() {
         return gendersRepository.findAll();
     }
 
-    public Genders getById(Long id) {
-        return gendersRepository.findById(id).orElse(new Genders());
+    public Optional<Genders> getById(Long id) {
+        return gendersRepository.findById(id);
     }
 
 }

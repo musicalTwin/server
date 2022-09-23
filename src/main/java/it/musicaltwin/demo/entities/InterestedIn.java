@@ -2,6 +2,7 @@ package it.musicaltwin.demo.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -19,7 +20,7 @@ import lombok.NoArgsConstructor;
 public class InterestedIn {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "id", strategy = GenerationType.TABLE)
     private Long id;
 
     @ManyToOne
@@ -29,4 +30,10 @@ public class InterestedIn {
     @ManyToOne
     @JoinColumn(name = "gender_id", nullable = false)
     private Genders gender;
+
+    public InterestedIn(Users user, Genders gender) {
+        this.user = user;
+        this.gender = gender;
+    }
+
 }

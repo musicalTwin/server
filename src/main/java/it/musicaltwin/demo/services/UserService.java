@@ -29,6 +29,11 @@ public class UserService {
     }
 
     public void addUser(Users user) {
-        userRepository.save(user);
+        Optional<Users> userObj = userRepository.findById(user.getId());
+        if (userObj.isEmpty()) {
+            userRepository.save(user);
+        } else {
+            System.out.println(user.getId() + " esisteva già.");
+        }
     }
 }

@@ -11,18 +11,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.musicaltwin.demo.entities.Genders;
 import it.musicaltwin.demo.entities.Users;
+import it.musicaltwin.demo.services.GendersService;
 import it.musicaltwin.demo.services.UserService;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
 public class UserController {
 
-    @Autowired
     private final UserService userService;
+    private final GendersService gendersService;
 
-    public UserController(UserService userService) {
+    @Autowired
+    public UserController(UserService userService, GendersService gendersService) {
         this.userService = userService;
+        this.gendersService = gendersService;
     }
 
     @GetMapping
@@ -37,8 +41,14 @@ public class UserController {
 
     @PostMapping
     public void addUserToDatabase(@RequestBody Users user) {
-        System.out.println(user);
-        // userService.addUser(user);
+        Optional<Genders> genderObj = gendersService.getById(user.getGender().getId());
+        genderObj.ifPresentOrElse(gender -> {
+            user.setGender(gender);
+            userService.addUser(user);
+        }, () -> {
+            throw new IllegalStateException("The gender ID is invalid.");
+        });
+
     }
 
 }
