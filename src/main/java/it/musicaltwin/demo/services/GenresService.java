@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class GenresService {
 
-    @Autowired
     private final GenresRepository genresRepository;
 
+    @Autowired
     public GenresService(GenresRepository genresRepository) {
         this.genresRepository = genresRepository;
     }

@@ -1,24 +1,33 @@
-// package it.musicaltwin.demo.services;
+package it.musicaltwin.demo.services;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
-// import javax.persistence.Table;
+import it.musicaltwin.demo.entities.Genders;
+import it.musicaltwin.demo.repositories.GendersRepository;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+import java.util.List;
 
-// @Table(name = "genders")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class GendersService {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-//     @Column(name = "gender_id")
-//     private Long id;
+@Service
+public class GendersService {
 
-//     @Column(name = "gender_name", nullable = false)
-//     private String name;
+    private final GendersRepository gendersRepository;
 
-// }
+    @Autowired
+    public GendersService(GendersRepository gendersRepository) {
+        this.gendersRepository = gendersRepository;
+    }
+
+    public Genders getByName(String name) {
+        return gendersRepository.getByName(name).orElse(new Genders());
+    }
+
+    public List<Genders> getAllGenders() {
+        return gendersRepository.findAll();
+    }
+
+    public Genders getById(Long id) {
+        return gendersRepository.findById(id).orElse(new Genders());
+    }
+
+}

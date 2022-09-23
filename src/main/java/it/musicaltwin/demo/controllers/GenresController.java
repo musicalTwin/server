@@ -1,25 +1,20 @@
-// package it.musicaltwin.demo.controllers;
+package it.musicaltwin.demo.controllers;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// import javax.persistence.Table;
+import it.musicaltwin.demo.services.GenresService;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+@RestController
+@RequestMapping(path = "api/v1/users")
+public class GenresController {
 
-// @Table(name = "genres")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class GenresController {
+    @Autowired
+    private final GenresService genresService;
 
-//     @Column(name = "genre_id")
-//     private Long id;
+    public GenresController(GenresService genresService) {
+        this.genresService = genresService;
+    }
 
-//     @Column(name = "genre_name", nullable = false)
-//     private String name;
-
-// }
+}

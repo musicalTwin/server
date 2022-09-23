@@ -1,24 +1,15 @@
-// package it.musicaltwin.demo.repositories;
+package it.musicaltwin.demo.repositories;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
-// import javax.persistence.Table;
+import java.util.Optional;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
-// @Table(name = "genders")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class GendersRepository {
+import it.musicaltwin.demo.entities.Genders;
 
-//     @Column(name = "gender_id")
-//     private Long id;
+public interface GendersRepository extends JpaRepository<Genders, Long> {
 
-//     @Column(name = "gender_name", nullable = false)
-//     private String name;
+    @Query(value = "SELECT * FROM genders gen WHERE gen.gender_name = ?1", nativeQuery = true)
+    Optional<Genders> getByName(String genreName);
 
-// }
+}

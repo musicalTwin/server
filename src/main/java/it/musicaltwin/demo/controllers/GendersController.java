@@ -1,24 +1,40 @@
-// package it.musicaltwin.demo.controllers;
+package it.musicaltwin.demo.controllers;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
-// import javax.persistence.Table;
+import java.util.List;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-// @Table(name = "genders")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class GendersController {
+import it.musicaltwin.demo.entities.Genders;
+import it.musicaltwin.demo.services.GendersService;
 
-//     @Column(name = "gender_id")
-//     private Long id;
+@RestController
+@RequestMapping(path = "api/v1/genders")
+public class GendersController {
 
-//     @Column(name = "gender_name", nullable = false)
-//     private String name;
+    private final GendersService gendersService;
 
-// }
+    @Autowired
+    public GendersController(GendersService gendersService) {
+        this.gendersService = gendersService;
+    }
+
+    @GetMapping("name/{genderName}")
+    public Genders getByName(@PathVariable(name = "genderName") String name) {
+        return gendersService.getByName(name);
+    }
+
+    @GetMapping("id/{genderId}")
+    public Genders getById(@PathVariable(name = "genderId") Long id) {
+        return gendersService.getById(id);
+    }
+
+    @GetMapping
+    public List<Genders> getAllGenders() {
+        return gendersService.getAllGenders();
+    }
+
+}
