@@ -42,4 +42,6 @@ public class UsersGenres {
         this.genre = genre;
     }
 
+    
+
 }

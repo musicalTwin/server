@@ -1,27 +1,17 @@
-// package it.musicaltwin.demo.services;
+package it.musicaltwin.demo.services;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
-// import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+import it.musicaltwin.demo.entities.Matches;
+import it.musicaltwin.demo.repositories.MatchRepository;
 
-// @Table(name = "match")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class MatchService {
+@Service
+public class MatchService {
+    private final MatchRepository matchRepository;
 
-//     @Column(name = "user_id")
-//     private String user_id;
-
-//     @Column(name = "user_to_match_id", nullable = false)
-//     private String user_to_match_id;
-
-//     @Column(name = "matched")
-//     private Boolean matched;
-
-// }
+    @Autowired
+    public MatchService(MatchRepository matchRepository) {
+        this.matchRepository = matchRepository;
+    }
+}

@@ -1,6 +1,11 @@
 package it.musicaltwin.demo.controllers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import it.musicaltwin.demo.Utils;
 import it.musicaltwin.demo.entities.Genres;
 import it.musicaltwin.demo.entities.Users;
 import it.musicaltwin.demo.entities.UsersGenres;
@@ -63,6 +69,11 @@ public class UsersGenresController {
             }
 
             List<String> genres = body.get("genres");
+            genres = Utils.sortL(genres); // Sorting list (in a loser way L)
+
+            // Removing duplicates from genres
+            genres = Utils.removeDuplicates(genres);
+
             for (var genreName : genres) {
                 Genres genre = genresService.findByName(genreName);
                 System.out.println(genre);
@@ -70,7 +81,5 @@ public class UsersGenresController {
                 usersGenresService.addToDatabase(usersGenres);
             }
         }
-
     }
-
 }

@@ -1,27 +1,29 @@
-// package it.musicaltwin.demo.controllers;
+package it.musicaltwin.demo.controllers;
 
-// import javax.persistence.Column;
-// import javax.persistence.Entity;
-// import javax.persistence.Table;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
-// import lombok.Data;
-// import lombok.NoArgsConstructor;
-// import lombok.AllArgsConstructor;
+import it.musicaltwin.demo.services.MatchService;
 
-// @Table(name = "match")
-// @Data
-// @NoArgsConstructor
-// @AllArgsConstructor
-// @Entity
-// public class MatchController {
+@RestController
+@RequestMapping(path = "api/v1/find-match")
+public class MatchController {
+    private final MatchService matchService;
+    private final UsersGenresController usersGenresController;
 
-//     @Column(name = "user_id")
-//     private String user_id;
+    @Autowired
+    public MatchController(MatchService matchService, UsersGenresController usersGenresController) {
+        this.matchService = matchService;
+        this.usersGenresController = usersGenresController;
+    }
+    
 
-//     @Column(name = "user_to_match_id", nullable = false)
-//     private String user_to_match_id;
+    // @PostMapping(path = "{userId}")
+    // public String test(@PathVariable("userId") String userId) {
 
-//     @Column(name = "matched")
-//     private Boolean matched;
+    // }
 
-// }
+}
