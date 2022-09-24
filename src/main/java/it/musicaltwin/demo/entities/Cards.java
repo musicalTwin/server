@@ -2,6 +2,7 @@ package it.musicaltwin.demo.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -19,10 +20,14 @@ import lombok.NoArgsConstructor;
 public class Cards {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "id", strategy = GenerationType.TABLE)
     private Long id;
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private Users user;
+
+    public Cards(Users user) {
+        this.user = user;
+    }
 }

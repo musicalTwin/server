@@ -23,3 +23,8 @@ Content-Type: application/json
         "id": 4
     }
 }
+
+
+###
+
+POST http://localhost:5000/api/v1/recommendation/316wiws546iswu4y6kgtrsf2vky4
