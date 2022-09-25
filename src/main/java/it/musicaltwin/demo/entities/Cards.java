@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ import lombok.NoArgsConstructor;
 public class Cards {
 
     @Id
+    @Column(name = "card_id")
     @GeneratedValue(generator = "id", strategy = GenerationType.TABLE)
     private Long id;
 

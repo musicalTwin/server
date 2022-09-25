@@ -71,8 +71,8 @@ public class UsersGenresController {
 
             for (var genreName : genres) {
                 Genres genre = genresService.findByName(genreName);
-                System.out.println(genre);
                 UsersGenres usersGenres = new UsersGenres(user, genre);
+                System.out.println(usersGenres);
                 usersGenresService.addToDatabase(usersGenres);
             }
         }

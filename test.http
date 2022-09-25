@@ -27,4 +27,66 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:5000/api/v1/recommendation/316wiws546iswu4y6kgtrsf2vky4
+POST http://localhost:5000/api/v1/user-genres
+Content-Type: application/json
+
+{
+  "id": [
+    "31ypjzitriimy4b2fhfhu5enh4w4"
+  ],
+  "genres": [
+    "italian hip hop",
+    "alternative metal",
+    "nu metal",
+    "rap metal",
+    "italian hip hop",
+    "italian underground hip hop",
+    "rap italiano old school",
+    "alternative metal",
+    "nu metal",
+    "rap metal",
+    "rome indie",
+    "rome indie",
+    "italian hip hop",
+    "bedroom pop",
+    "indie pop",
+    "pop",
+    "rome indie",
+    "italian hip hop",
+    "rap napoletano",
+    "bedroom pop",
+    "indie pop",
+    "pop",
+    "rome indie",
+    "dance pop",
+    "dance pop",
+    "edm",
+    "electro house",
+    "german dance",
+    "pop",
+    "pop dance",
+    "tropical house",
+    "uk pop",
+    "canadian indie",
+    "folk-pop",
+    "pop rock",
+    "stomp and holler",
+    "album rock",
+    "glam rock",
+    "hard rock",
+    "metal",
+    "rock",
+    "australian rock",
+    "hard rock",
+    "rock",
+    "italian hip hop",
+    "rap napoletano",
+    "modern rock",
+    "rock",
+    "italian hip hop",
+    "italian underground hip hop",
+    "rap italiano old school",
+    "italian hip hop",
+    "rap napoletano"
+  ]
+}

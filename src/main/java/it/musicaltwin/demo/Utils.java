@@ -1,9 +1,13 @@
 package it.musicaltwin.demo;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+
+import it.musicaltwin.demo.entities.Genders;
+
 import java.util.List;
 
 /* 
@@ -25,12 +29,15 @@ public class Utils {
                 sorted.add(vc.value);
         return sorted;
     }
+
     private static final class ValueCount<V extends Comparable<V>> implements Comparable<ValueCount<V>> {
         final V value;
         int count;
+
         ValueCount(V value) {
             this.value = value;
         }
+
         @Override
         public int compareTo(ValueCount<V> that) {
             int cmp = Integer.compare(that.count, this.count); // descending
@@ -41,24 +48,39 @@ public class Utils {
     }
 
     // https://www.geeksforgeeks.org/how-to-remove-duplicates-from-arraylist-in-java/
-    public static <T> ArrayList<T> removeDuplicates(List<T> list)
-    {
-  
+    public static <T> ArrayList<T> removeDuplicates(List<T> list) {
+
         // Create a new ArrayList
         ArrayList<T> newList = new ArrayList<T>();
-  
+
         // Traverse through the first list
         for (T element : list) {
-  
+
             // If this element is not present in newList
             // then add it
             if (!newList.contains(element)) {
-  
+
                 newList.add(element);
             }
         }
-  
+
         // return the new list
         return newList;
     }
+
+    static final String AB = "0123456789abcdefghijklmnopqrstuvwxyz";
+    static SecureRandom rnd = new SecureRandom();
+
+    public static String randomString(int len) {
+        StringBuilder sb = new StringBuilder(len);
+        for (int i = 0; i < len; i++)
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        return sb.toString();
+    }
+
+    public static Long randomGenderId(Integer max, Integer min) {
+        Long random_int = (long) Math.floor(Math.random() * (max - min + 1) + min);
+        return random_int;
+    }
+
 }

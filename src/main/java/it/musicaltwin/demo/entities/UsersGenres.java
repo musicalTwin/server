@@ -24,7 +24,7 @@ public class UsersGenres {
 
     @Id
     @Column(name = "users_genres_id")
-    @GeneratedValue(generator = "users_genres_id", strategy = GenerationType.TABLE)
+    @GeneratedValue(generator = "id", strategy = GenerationType.TABLE)
     @JsonIgnore
     private Long id;
 
@@ -41,7 +41,5 @@ public class UsersGenres {
         this.user = user;
         this.genre = genre;
     }
-
-    
 
 }
