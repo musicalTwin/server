@@ -2,6 +2,6 @@
 
 package it.musicaltwin.demo;
 
-public class V {
+public class A {
 
 }
