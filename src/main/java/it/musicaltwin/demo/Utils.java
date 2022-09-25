@@ -6,6 +6,13 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
+import java.util.LinkedHashMap;
+import static java.util.stream.Collectors.toMap;
+import static java.util.Map.Entry.comparingByValue;
+
+import it.musicaltwin.demo.entities.Cards;
+
 import java.util.List;
 
 /* 
@@ -79,6 +86,13 @@ public class Utils {
     public static Long randomGenderId(Integer max, Integer min) {
         Long random_int = (long) Math.floor(Math.random() * (max - min + 1) + min);
         return random_int;
+    }
+
+    public static Map<Cards, Double> sortByValue(Map<Cards, Double> map) {
+        Map<Cards, Double> sorted = map
+                .entrySet().stream().sorted(comparingByValue())
+                .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
+        return sorted;
     }
 
 }

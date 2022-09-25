@@ -2,6 +2,7 @@ package it.musicaltwin.demo.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import it.musicaltwin.demo.Utils;
 import it.musicaltwin.demo.entities.Cards;
 import it.musicaltwin.demo.entities.Genders;
 import it.musicaltwin.demo.entities.InterestedIn;
@@ -12,7 +13,12 @@ import it.musicaltwin.demo.services.MatchService;
 import it.musicaltwin.demo.services.UserService;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +55,7 @@ public class RecommendationController {
 
         List<InterestedIn> intrestedIn = interestedInService.findByUserId(userId);
         List<Genders> intrestedInGenres = new ArrayList<Genders>();
+        
         for (var gender : intrestedIn) {
             intrestedInGenres.add(gender.getGender());
         }
@@ -60,7 +67,7 @@ public class RecommendationController {
         List<String> searchedPersonGenres = new ArrayList<String>();
 
         // Eventual list of cards of people with similar musical taste
-        List<Cards> matchedPeople = new ArrayList<Cards>();
+        Map<Cards, Double> matchedPeople = new HashMap<Cards, Double>();
         Integer total = 0, present = 0;
 
         // For every user in the db other than themselves
@@ -72,8 +79,8 @@ public class RecommendationController {
             List<Long> cardsId = matchService.findCardId(userId);
 
             if ((!currUser.getId().equals(userId)) &&
-                 intrestedInGenres.contains(currUser.getGender()) &&
-                 (!cardsId.contains(userCard.getId()))) {
+                intrestedInGenres.contains(currUser.getGender()) &&
+                (!cardsId.contains(userCard.getId()))) {
                 // Getting listened genres of a user
                 searchedPersonGenres = usersGenresController
                         .getListenedGenres(currUser.getId());
@@ -87,12 +94,15 @@ public class RecommendationController {
                     }
                 }
 
-                // If the match is higher than 80% add the user to the recommendation list
-                if (((float) present / total) * 100 >= 26) {
-                    matchedPeople.add(userCard);
-                }
+                // Matched people sorted by matching
+                matchedPeople.put(userCard, ((double) present / total) * 100);
             }
         }
-        return matchedPeople;
+
+        matchedPeople = Utils.sortByValue(matchedPeople);
+        List<Cards> matchedPeopleList = new ArrayList<Cards>(matchedPeople.keySet());        
+        Collections.reverse(matchedPeopleList);
+        
+        return matchedPeopleList;
     }
 }

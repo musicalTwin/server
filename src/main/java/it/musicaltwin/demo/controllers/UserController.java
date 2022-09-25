@@ -51,7 +51,7 @@ public class UserController {
 
     @GetMapping(path = "generate")
     public void generateUser() {
-        for (Integer i = 0; i < 189; i++) {
+        for (Integer i = 0; i < 499; i++) {
 
             String id = Utils.randomString(25);
             String username = Utils.randomString(6);
