@@ -5,3 +5,4 @@ Compile and run the jar for production and i suggest to use the Visual Studio Co
 
 # Info
 It runs on port `5000`, also specified in `application.properties`.
+Docs url: `http://localhost:5000/swagger-ui/index.html`
