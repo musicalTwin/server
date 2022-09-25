@@ -32,4 +32,8 @@ public class Cards {
     public Cards(Users user) {
         this.user = user;
     }
+
+    public Cards(Long id) {
+        this.id = id;
+    }
 }

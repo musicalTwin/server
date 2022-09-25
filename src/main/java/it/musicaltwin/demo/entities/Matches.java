@@ -33,4 +33,10 @@ public class Matches {
     @ManyToOne
     @JoinColumn(name = "card_id", nullable = false)
     private Cards card;
+
+    public Matches(boolean matched, Users user, Cards card) {
+        this.matched = matched;
+        this.user = user;
+        this.card = card;
+    }
 }
