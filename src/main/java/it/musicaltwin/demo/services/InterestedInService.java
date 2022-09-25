@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class InterestedInService {
     }
 
     public List<InterestedIn> findByUserId(String userId) {
-        return intrestedInRepository.findByUserId(userId);
+        return intrestedInRepository.findByUserId(userId).orElse(new ArrayList<InterestedIn>());
     }
 
 }

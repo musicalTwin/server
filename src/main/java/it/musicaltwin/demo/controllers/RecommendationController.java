@@ -17,8 +17,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +53,7 @@ public class RecommendationController {
 
         List<InterestedIn> intrestedIn = interestedInService.findByUserId(userId);
         List<Genders> intrestedInGenres = new ArrayList<Genders>();
-        
+
         for (var gender : intrestedIn) {
             intrestedInGenres.add(gender.getGender());
         }
@@ -79,8 +77,8 @@ public class RecommendationController {
             List<Long> cardsId = matchService.findCardId(userId);
 
             if ((!currUser.getId().equals(userId)) &&
-                intrestedInGenres.contains(currUser.getGender()) &&
-                (!cardsId.contains(userCard.getId()))) {
+                    intrestedInGenres.contains(currUser.getGender()) &&
+                    (!cardsId.contains(userCard.getId()))) {
                 // Getting listened genres of a user
                 searchedPersonGenres = usersGenresController
                         .getListenedGenres(currUser.getId());
@@ -100,9 +98,9 @@ public class RecommendationController {
         }
 
         matchedPeople = Utils.sortByValue(matchedPeople);
-        List<Cards> matchedPeopleList = new ArrayList<Cards>(matchedPeople.keySet());        
+        List<Cards> matchedPeopleList = new ArrayList<Cards>(matchedPeople.keySet());
         Collections.reverse(matchedPeopleList);
-        
+
         return matchedPeopleList;
     }
 }

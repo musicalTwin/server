@@ -90,3 +90,7 @@ Content-Type: application/json
     "rap napoletano"
   ]
 }
+
+###
+
+PATCH http://localhost:5000/api/v1/users/054tbxkq41y7o0l92jd5nppj4?username=Paolo&genderId=2
