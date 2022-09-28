@@ -20,7 +20,7 @@ public class MatchController {
     }
 
     @PostMapping
-    public void test(@RequestBody Matches matches) {
+    public void match(@RequestBody Matches matches) {
         matchService.createMatch(matches);
     }
 

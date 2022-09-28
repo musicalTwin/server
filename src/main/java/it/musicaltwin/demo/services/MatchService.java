@@ -25,5 +25,8 @@ public class MatchService {
         return matchRepository.findCardId(userId);
     }
 
+    public boolean test(String userId, Long cardId) {
+        return matchRepository.aaa(userId, cardId).isEmpty();
+    }
     
 }

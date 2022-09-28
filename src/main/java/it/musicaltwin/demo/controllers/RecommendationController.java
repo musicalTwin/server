@@ -17,8 +17,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,10 +52,12 @@ public class RecommendationController {
     public List<Cards> getRecommendation(@PathVariable("userId") String userId) {
 
         List<InterestedIn> intrestedIn = interestedInService.findByUserId(userId);
-        List<Genders> intrestedInGenres = new ArrayList<Genders>();
+        List<Genders> intrestedInGenders = new ArrayList<Genders>();
+        List<Cards> requestSender = new ArrayList<Cards>();
         
+        // Genders in which the user is interested in
         for (var gender : intrestedIn) {
-            intrestedInGenres.add(gender.getGender());
+            intrestedInGenders.add(gender.getGender());
         }
 
         // List of genres that the user who started the search listen to
@@ -68,6 +68,7 @@ public class RecommendationController {
 
         // Eventual list of cards of people with similar musical taste
         Map<Cards, Double> matchedPeople = new HashMap<Cards, Double>();
+
         Integer total = 0, present = 0;
 
         // For every user in the db other than themselves
@@ -78,30 +79,49 @@ public class RecommendationController {
             Cards userCard = cardsService.findByUserId(currUser.getId());
             List<Long> cardsId = matchService.findCardId(userId);
 
+            // If the current user is not yourself
             if ((!currUser.getId().equals(userId)) &&
-                intrestedInGenres.contains(currUser.getGender()) &&
+                // If the current user is the gender you are interested in
+                intrestedInGenders.contains(currUser.getGender()) &&
+                // If you don't have already matched the user
                 (!cardsId.contains(userCard.getId()))) {
-                // Getting listened genres of a user
-                searchedPersonGenres = usersGenresController
-                        .getListenedGenres(currUser.getId());
 
-                // Calculating how much the lists of genres matches
-                total = searcherListenedGenres.size();
-                present = 0;
-                for (Long j = 0L; j < total; j++) {
-                    if (searchedPersonGenres.contains(searcherListenedGenres.get(j.intValue()))) {
-                        present++;
+                // If nobody sent a request to text you
+                if (matchService.test(currUser.getId(), cardsService.findByUserId(userId).getId())) {
+
+                    // Getting listened genres of a user
+                    searchedPersonGenres = usersGenresController.getListenedGenres(currUser.getId());
+                    System.out.println(searcherListenedGenres);
+                    System.out.println(searchedPersonGenres);
+                    
+                    // Calculating how much the lists of genres matches
+                    total = searcherListenedGenres.size();
+                    present = 0;
+                    for (Long j = 0L; j < total; j++) {
+                        if (searchedPersonGenres.contains(searcherListenedGenres.get(j.intValue()))) {
+                            present++;
+                        }
                     }
+                    
+                    // Matched people with percentage of matching
+                    matchedPeople.put(userCard, ((double) present / total) * 100);
                 }
-
-                // Matched people sorted by matching
-                matchedPeople.put(userCard, ((double) present / total) * 100);
+                // If somebody sent a request to text you
+                else {
+                    requestSender.add(userCard);
+                }
             }
         }
-
+        
+        // Sorting the HashMap by the percentage of matching and casting to List
         matchedPeople = Utils.sortByValue(matchedPeople);
         List<Cards> matchedPeopleList = new ArrayList<Cards>(matchedPeople.keySet());        
         Collections.reverse(matchedPeopleList);
+
+        // Add people that request to text you at the beginnig of the list
+        for (Integer i = 0; i < requestSender.size(); i++) {
+            matchedPeopleList.add(i, requestSender.get(i));
+        }
         
         return matchedPeopleList;
     }
