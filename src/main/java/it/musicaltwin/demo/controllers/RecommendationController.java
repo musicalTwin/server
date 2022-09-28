@@ -53,6 +53,7 @@ public class RecommendationController {
 
         List<InterestedIn> intrestedIn = interestedInService.findByUserId(userId);
         List<Genders> intrestedInGenres = new ArrayList<Genders>();
+        Cards userCard = cardsService.findByUserId(userId);
 
         for (var gender : intrestedIn) {
             intrestedInGenres.add(gender.getGender());
@@ -73,12 +74,12 @@ public class RecommendationController {
         for (Long i = 0L; i < users.size(); i++) {
 
             Users currUser = users.get(i.intValue());
-            Cards userCard = cardsService.findByUserId(currUser.getId());
+            Cards currUserCard = cardsService.findByUserId(currUser.getId());
             List<Long> cardsId = matchService.findCardId(userId);
 
             if ((!currUser.getId().equals(userId)) &&
                     intrestedInGenres.contains(currUser.getGender()) &&
-                    (!cardsId.contains(userCard.getId()))) {
+                    !cardsId.contains(currUserCard.getId())) {
                 // Getting listened genres of a user
                 searchedPersonGenres = usersGenresController
                         .getListenedGenres(currUser.getId());
@@ -93,7 +94,7 @@ public class RecommendationController {
                 }
 
                 // Matched people sorted by matching
-                matchedPeople.put(userCard, ((double) present / total) * 100);
+                matchedPeople.put(currUserCard, ((double) present / total) * 100);
             }
         }
 
