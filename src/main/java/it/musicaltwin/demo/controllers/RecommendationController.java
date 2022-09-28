@@ -76,7 +76,7 @@ public class RecommendationController {
         for (Long i = 0L; i < users.size(); i++) {
 
             Users currUser = users.get(i.intValue());
-            Cards userCard = cardsService.findByUserId(currUser.getId());
+            Cards currUserCard = cardsService.findByUserId(currUser.getId());
             List<Long> cardsId = matchService.findCardId(userId);
 
             // If the current user is not yourself
@@ -84,15 +84,13 @@ public class RecommendationController {
                 // If the current user is the gender you are interested in
                 intrestedInGenders.contains(currUser.getGender()) &&
                 // If you don't have already matched the user
-                (!cardsId.contains(userCard.getId()))) {
+                (!cardsId.contains(currUserCard.getId()))) {
 
                 // If nobody sent a request to text you
                 if (matchService.test(currUser.getId(), cardsService.findByUserId(userId).getId())) {
 
                     // Getting listened genres of a user
                     searchedPersonGenres = usersGenresController.getListenedGenres(currUser.getId());
-                    System.out.println(searcherListenedGenres);
-                    System.out.println(searchedPersonGenres);
                     
                     // Calculating how much the lists of genres matches
                     total = searcherListenedGenres.size();
@@ -104,18 +102,18 @@ public class RecommendationController {
                     }
                     
                     // Matched people with percentage of matching
-                    matchedPeople.put(userCard, ((double) present / total) * 100);
+                    matchedPeople.put(currUserCard, ((double) present / total) * 100);
                 }
                 // If somebody sent a request to text you
                 else {
-                    requestSender.add(userCard);
+                    requestSender.add(currUserCard);
                 }
             }
         }
         
         // Sorting the HashMap by the percentage of matching and casting to List
         matchedPeople = Utils.sortByValue(matchedPeople);
-        List<Cards> matchedPeopleList = new ArrayList<Cards>(matchedPeople.keySet());        
+        List<Cards> matchedPeopleList = new ArrayList<Cards>(matchedPeople.keySet());
         Collections.reverse(matchedPeopleList);
 
         // Add people that request to text you at the beginnig of the list

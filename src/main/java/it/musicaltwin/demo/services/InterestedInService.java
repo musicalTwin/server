@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,23 +11,31 @@ import it.musicaltwin.demo.repositories.InterestedInRepository;
 
 @Service
 public class InterestedInService {
-    private InterestedInRepository intrestedInRepository;
+    private InterestedInRepository interestedInRepository;
 
     @Autowired
-    public InterestedInService(InterestedInRepository intrestedInRepository) {
-        this.intrestedInRepository = intrestedInRepository;
+    public InterestedInService(InterestedInRepository interestedInRepository) {
+        this.interestedInRepository = interestedInRepository;
     }
 
     public List<InterestedIn> findAll() {
-        return intrestedInRepository.findAll();
+        return interestedInRepository.findAll();
     }
 
     public void addObj(InterestedIn body) {
-        intrestedInRepository.save(body);
+        interestedInRepository.save(body);
     }
 
     public List<InterestedIn> findByUserId(String userId) {
-        return intrestedInRepository.findByUserId(userId);
+        return interestedInRepository.findByUserId(userId).orElse(new ArrayList<InterestedIn>());
+    }
+
+    public void removeObj(InterestedIn i) {
+        interestedInRepository.delete(i);
+    }
+
+    public void removeAllByUserId(String id) {
+        interestedInRepository.deleteByUserId(id);
     }
 
 }

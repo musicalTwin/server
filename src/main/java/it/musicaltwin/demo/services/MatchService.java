@@ -28,5 +28,13 @@ public class MatchService {
     public boolean test(String userId, Long cardId) {
         return matchRepository.aaa(userId, cardId).isEmpty();
     }
+
+    // public Boolean checkIfAlreadyMatched(Cards currUserCard, Cards userCard) {
+    // var giovanni = matchRepository.checkIfAlreadyMatched(currUserCard.getId(),
+    // currUserCard.getUser().getId(),
+    // userCard.getId(), userCard.getUser().getId());
+    // return !giovanni.isEmpty();
+
+    // }
     
 }
