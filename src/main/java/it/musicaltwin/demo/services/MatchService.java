@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import it.musicaltwin.demo.entities.Cards;
 import it.musicaltwin.demo.entities.Matches;
 import it.musicaltwin.demo.repositories.MatchRepository;
 

@@ -1,6 +1,5 @@
 package it.musicaltwin.demo.controllers;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +18,7 @@ import it.musicaltwin.demo.entities.Genders;
 import it.musicaltwin.demo.entities.Users;
 import it.musicaltwin.demo.services.CardsService;
 import it.musicaltwin.demo.services.GendersService;
-import it.musicaltwin.demo.services.GenresService;
 import it.musicaltwin.demo.services.UserService;
-import it.musicaltwin.demo.services.UsersGenresService;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
@@ -30,17 +27,12 @@ public class UserController {
     private final UserService userService;
     private final GendersService gendersService;
     private final CardsService cardsService;
-    private final GenresService genresService;
-    private final UsersGenresService usersGenresService;
 
     @Autowired
-    public UserController(UserService userService, GendersService gendersService, CardsService cardsService,
-            GenresService genresService, UsersGenresService usersGenresService) {
+    public UserController(UserService userService, GendersService gendersService, CardsService cardsService) {
         this.userService = userService;
         this.gendersService = gendersService;
         this.cardsService = cardsService;
-        this.genresService = genresService;
-        this.usersGenresService = usersGenresService;
     }
 
     @GetMapping

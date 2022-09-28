@@ -53,7 +53,6 @@ public class RecommendationController {
 
         List<InterestedIn> intrestedIn = interestedInService.findByUserId(userId);
         List<Genders> intrestedInGenres = new ArrayList<Genders>();
-        Cards userCard = cardsService.findByUserId(userId);
 
         for (var gender : intrestedIn) {
             intrestedInGenres.add(gender.getGender());
