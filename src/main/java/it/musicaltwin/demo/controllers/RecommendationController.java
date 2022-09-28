@@ -85,7 +85,6 @@ public class RecommendationController {
                 intrestedInGenders.contains(currUser.getGender()) &&
                 // If you don't have already matched the user
                 (!cardsId.contains(currUserCard.getId()))) {
-
                 // If nobody sent a request to text you
                 if (matchService.test(currUser.getId(), cardsService.findByUserId(userId).getId())) {
 
