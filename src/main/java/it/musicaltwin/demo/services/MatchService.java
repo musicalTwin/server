@@ -1,6 +1,7 @@
 package it.musicaltwin.demo.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,11 @@ public class MatchService {
     }
 
     public void createMatch(Matches matches) {
-        matchRepository.save(matches);
+        Optional<Matches> optionalMatch = matchRepository.findMatch(matches.getCard().getId(),
+                matches.getUser().getId());
+        if (!optionalMatch.isPresent()) {
+            matchRepository.save(matches);
+        }
     }
 
     public List<Long> findCardId(String userId) {
