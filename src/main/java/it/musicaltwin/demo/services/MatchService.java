@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import it.musicaltwin.demo.entities.Cards;
 import it.musicaltwin.demo.entities.Matches;
+import it.musicaltwin.demo.entities.Users;
 import it.musicaltwin.demo.repositories.MatchRepository;
 
 @Service
@@ -31,10 +32,15 @@ public class MatchService {
     }
 
     public Boolean checkIfAlreadyMatched(Cards currUserCard, Cards userCard) {
-        var giovanni = matchRepository.checkIfAlreadyMatched(currUserCard.getId(),
-                currUserCard.getUser().getId(),
-                userCard.getId(), userCard.getUser().getId());
-        return !giovanni.isEmpty();
+        Users currUser = currUserCard.getUser();
+        Users user = userCard.getUser();
+
+        List<Matches> matchList = matchRepository.checkIfAlreadyMatched(
+                currUserCard.getId(),
+                userCard.getId(),
+                currUser.getId(),
+                user.getId());
+        return matchList.size() > 1;
 
     }
 

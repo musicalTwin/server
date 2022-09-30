@@ -16,6 +16,6 @@ public interface MatchRepository extends JpaRepository<Matches, String> {
     List<Matches> aaa(String userId, Long cardId);
 
     @Query(value = "SELECT * FROM matches mat WHERE (mat.user_id = ?3 OR mat.user_id = ?4) AND (mat.card_id = ?1 OR mat.card_id = ?2) AND mat.matched = 1", nativeQuery = true)
-    List<Matches> checkIfAlreadyMatched(Long cardId, String cardId2, Long userId, String userdId2);
-    
+    List<Matches> checkIfAlreadyMatched(Long cardId, Long cardId2, String userId, String userdId2);
+
 }

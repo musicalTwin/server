@@ -49,7 +49,6 @@ public class InterestedInController {
         for (var i : body1) {
             Optional<Users> userObj = usersService.getUserInfoById(i.getUser().getId());
             Optional<Genders> gendersObj = gendersService.getById(i.getGender().getId());
-
             userObj.ifPresentOrElse(userobj -> {
                 gendersObj.ifPresentOrElse(gender -> {
                     InterestedIn interestedIn = new InterestedIn(userobj, gender);
