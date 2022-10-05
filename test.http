@@ -92,18 +92,22 @@ Content-Type: application/json
 }
 
 ###
-
+# Change info about user
 PATCH http://localhost:5000/api/v1/users/054tbxkq41y7o0l92jd5nppj4?username=Paolo&genderId=2
 
 
 ###
-
+# Get chats of user
 POST http://localhost:5000/api/v1/chat/316wiws546iswu4y6kgtrsf2vky4
 
 ###
-
+# Get messages of chat
 POST http://localhost:5000/api/v1/messages/1
 
 ###
+# Update last message
+POST http://localhost:5000/api/v1/chat/update-last-message?chatId=1&lastMessage=fsdfa&lastTimeSent=2022-10-05 21:16:45.000000
 
-POST http://localhost:5000/api/v1/chat/update-last-message?chatId=1&lastMessage=aaa aa&lastTimeSent=2022-10-05 19:26:32
+###
+# Add message
+POST http://localhost:5000/api/v1/messages/add-message?chatId=1&senderId=316wiws546iswu4y6kgtrsf2vky4&text=test_url_query&dateTime=2022-10-05 21:16:45.000000

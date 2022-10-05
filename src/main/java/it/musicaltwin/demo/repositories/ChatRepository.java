@@ -25,5 +25,10 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Transactional
     @Query(value = "UPDATE chat c SET c.last_time_sent = ?2 WHERE chat_id = ?1", nativeQuery = true)
     void updateLastMessageTimeOfChat(Long chatId, Timestamp lastTimeSent);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO chat c(user1_id, user2_id) VALUES(?1, ?2)", nativeQuery = true)
+    void addChatToDatabase(String user1Id, String user2Id);
     
 }

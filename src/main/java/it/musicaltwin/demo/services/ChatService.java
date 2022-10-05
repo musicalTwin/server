@@ -26,4 +26,8 @@ public class ChatService {
         chatRepository.updateLastMessageSentOfChat(chatId, lastMessage);
         chatRepository.updateLastMessageTimeOfChat(chatId, lastTimeSent);
     }
+
+    public void addChatToDatabase(String user1Id, String user2Id) {
+        chatRepository.addChatToDatabase(user1Id, user2Id);
+    }
 }

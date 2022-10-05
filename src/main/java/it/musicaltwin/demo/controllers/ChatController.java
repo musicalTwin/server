@@ -40,7 +40,10 @@ public class ChatController {
         return chatService.getChatsOfUser(userId);
     }
 
-    
+    @PostMapping(path = "add-chat")
+    public void addChatToDatabase(@RequestParam String user1Id, @RequestParam String user2Id) {
+        chatService.addChatToDatabase(user1Id, user2Id);
+    }
 
     @PostMapping(path = "update-last-message")
     public void updateLastMessage(@RequestParam Long chatId, @RequestParam String lastMessage, @RequestParam Timestamp lastTimeSent) {
