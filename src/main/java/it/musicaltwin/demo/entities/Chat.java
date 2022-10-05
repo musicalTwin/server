@@ -1,5 +1,7 @@
 package it.musicaltwin.demo.entities;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,4 +29,11 @@ public class Chat {
     
     @Column(name = "user2_id", nullable = false)
     private String user2Id;
+
+    @Column(name = "last_message", nullable = true)
+    private String lastMessage;
+
+    @Column(name = "last_time_sent", nullable = true)
+    private Timestamp lastTimeSent;
+
 }

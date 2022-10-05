@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.services;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,10 @@ public class ChatService {
 
     public List<Chat> getChatsOfUser(String userId) {
         return chatRepository.getChatsOfUser(userId);
+    }
+
+    public void updateLastMessageOfChat(Long chatId, String lastMessage, Timestamp lastTimeSent) {
+        chatRepository.updateLastMessageSentOfChat(chatId, lastMessage);
+        chatRepository.updateLastMessageTimeOfChat(chatId, lastTimeSent);
     }
 }
