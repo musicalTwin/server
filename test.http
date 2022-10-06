@@ -26,8 +26,8 @@ Content-Type: application/json
 
 
 ###
-
-POST http://localhost:5000/api/v1/user-genres
+# ADD LISTENED GENRES
+POST http://localhost:5000/api/v1/users-genres
 Content-Type: application/json
 
 {
@@ -91,6 +91,41 @@ Content-Type: application/json
   ]
 }
 
+###
+# ADD TOP ARTISTS
+POST http://localhost:5000/api/v1/users-artists
+Content-Type: application/json
+
+{
+  "id": [
+    "31ypjzitriimy4b2fhfhu5enh4w4"
+  ],
+  "artists": [
+    "artista",
+    "artista1",
+    "artista2",
+    "artista3",
+    "artista4"
+  ]
+}
+
+###
+# ADD TOP SONGS
+POST http://localhost:5000/api/v1/users-songs
+Content-Type: application/json
+
+{
+  "id": [
+    "31ypjzitriimy4b2fhfhu5enh4w4"
+  ],
+  "songs": [
+    "canzone",
+    "canzone1",
+    "canzone2",
+    "canzone3",
+    "canzone4"
+  ]
+}
 
 
 ###
