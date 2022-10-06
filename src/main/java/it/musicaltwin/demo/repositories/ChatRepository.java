@@ -28,7 +28,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
 
     @Modifying
     @Transactional
-    @Query(value = "INSERT INTO chat c(user1_id, user2_id) VALUES(?1, ?2)", nativeQuery = true)
+    @Query(value = "INSERT INTO chat c (user1_id, user2_id) VALUES(?1, ?2)", nativeQuery = true)
     void addChatToDatabase(String user1Id, String user2Id);
-    
+
 }

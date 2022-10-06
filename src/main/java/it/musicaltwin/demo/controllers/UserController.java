@@ -13,12 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import it.musicaltwin.demo.Utils;
 import it.musicaltwin.demo.entities.Cards;
 import it.musicaltwin.demo.entities.Genders;
+import it.musicaltwin.demo.entities.Genres;
+import it.musicaltwin.demo.entities.InterestedIn;
 import it.musicaltwin.demo.entities.Users;
+import it.musicaltwin.demo.entities.UsersGenres;
 import it.musicaltwin.demo.services.CardsService;
 import it.musicaltwin.demo.services.GendersService;
 import it.musicaltwin.demo.services.UserService;
+import it.musicaltwin.demo.services.GenresService;
+import it.musicaltwin.demo.services.InterestedInService;
+import it.musicaltwin.demo.services.UsersGenresService;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
@@ -28,41 +35,67 @@ public class UserController {
     private final GendersService gendersService;
     private final CardsService cardsService;
 
+    private final GenresService genresService;
+    private final UsersGenresService usersGenresService;
+    private final InterestedInService interestedInService;
+
     @Autowired
-    public UserController(UserService userService, GendersService gendersService, CardsService cardsService) {
+    public UserController(UserService userService, GendersService gendersService, CardsService cardsService,
+            GenresService genresService, UsersGenresService usersGenresService,
+            InterestedInService interestedInService) {
         this.userService = userService;
         this.gendersService = gendersService;
         this.cardsService = cardsService;
+        this.genresService = genresService;
+        this.usersGenresService = usersGenresService;
+        this.interestedInService = interestedInService;
     }
+
+    // @Autowired
+    // public UserController(UserService userService, GendersService gendersService,
+    // CardsService cardsService) {
+    // this.userService = userService;
+    // this.gendersService = gendersService;
+    // this.cardsService = cardsService;
+    // }
 
     @GetMapping
     public List<Users> getUsers() {
         return userService.getUsers();
     }
 
-    // @GetMapping(path = "generate")
-    // public void generateUser() {
-    // for (Integer i = 0; i < 499; i++) {
+    @GetMapping(path = "generate")
+    public void generateUser() {
+        for (Integer i = 0; i < 499; i++) {
 
-    // String id = Utils.randomString(25);
-    // String username = Utils.randomString(6);
-    // Genders gender = gendersService.getById(Utils.randomGenderId(5,
-    // 1)).orElse(new Genders());
+            String id = Utils.randomString(25);
+            String username = Utils.randomString(6);
+            Genders gender = gendersService.getById(Utils.randomGenderId(5,
+                    1)).orElse(new Genders());
 
-    // Users newUser = new Users(id, username, gender);
-    // addUserToDatabase(newUser);
+            Users newUser = new Users(id, username, gender);
+            addUserToDatabase(newUser);
 
-    // for (Integer j = 0; j < 20; j++) {
+            for (Integer j = 0; j < 20; j++) {
 
-    // Long genreId = Utils.randomGenderId(5957, 1);
-    // Genres genre = genresService.findById(genreId);
+                if (j < 3) {
+                    Genders IntrestedInGender = gendersService.getById(Utils.randomGenderId(5,
+                            1)).orElse(new Genders());
+                    InterestedIn interestedIngender = new InterestedIn(newUser, IntrestedInGender);
+                    interestedInService.addObj(interestedIngender);
 
-    // UsersGenres usersGenres = new UsersGenres(newUser, genre);
-    // usersGenresService.addToDatabase(usersGenres);
-    // }
-    // }
+                }
 
-    // }
+                Long genreId = Utils.randomGenderId(5957, 1);
+                Genres genre = genresService.findById(genreId);
+
+                UsersGenres usersGenres = new UsersGenres(newUser, genre);
+                usersGenresService.addToDatabase(usersGenres);
+            }
+
+        }
+
+    }
 
     @GetMapping(path = "{userId}")
     public Optional<Users> getUserById(@PathVariable("userId") String userId) {

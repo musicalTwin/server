@@ -91,23 +91,40 @@ Content-Type: application/json
   ]
 }
 
+
+
 ###
 # Change info about user
 PATCH http://localhost:5000/api/v1/users/054tbxkq41y7o0l92jd5nppj4?username=Paolo&genderId=2
 
 
-###
-# Get chats of user
-POST http://localhost:5000/api/v1/chat/316wiws546iswu4y6kgtrsf2vky4
 
-###
-# Get messages of chat
-POST http://localhost:5000/api/v1/messages/1
 
-###
-# Update last message
-POST http://localhost:5000/api/v1/chat/update-last-message?chatId=1&lastMessage=fsdfa&lastTimeSent=2022-10-05 21:16:45.000000
+### MESSAGING TESTING
 
-###
-# Add message
-POST http://localhost:5000/api/v1/messages/add-message?chatId=1&senderId=316wiws546iswu4y6kgtrsf2vky4&text=test_url_query&dateTime=2022-10-05 21:16:45.000000
+### CREATE A CHAT
+POST http://localhost:5000/api/v1/chat/add-chat
+Content-Type: application/json
+
+{
+  "user1Id": "3hgt4v55jcdgkiaygsy1naiui", 
+  "user2Id": "3klicvqktp0kxiqr690pb1923"
+}
+
+### GET USER'S CHAT
+GET http://localhost:5000/api/v1/chat/4nll1r1xyxfuf6p66jhfyo385
+
+
+### ADD A MESSAGE
+POST http://localhost:5000/api/v1/messages/add-message
+Content-Type: application/json
+
+{
+  "chatId": 506,
+  "senderId": "3hgt4v55jcdgkiaygsy1naiui",
+  "text": "Carlo",
+  "dateTime": "{{$datetime rfc1123}}"
+}
+
+### GET CHAT MESSAGES
+GET http://localhost:5000/api/v1/messages/506

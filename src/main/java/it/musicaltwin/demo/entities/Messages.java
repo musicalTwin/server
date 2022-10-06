@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Messages {
-    
+
     @Id
     @GeneratedValue(generator = "id")
     @Column(name = "message_id")
@@ -35,5 +35,12 @@ public class Messages {
 
     @Column(name = "date_time", nullable = false)
     private Timestamp dateTime;
+
+    public Messages(Long chatId, String senderId, String text, Timestamp dateTime) {
+        this.chatId = chatId;
+        this.senderId = senderId;
+        this.text = text;
+        this.dateTime = dateTime;
+    }
 
 }

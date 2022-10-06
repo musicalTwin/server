@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Chat {
-    
+
     @Id
     @GeneratedValue(generator = "id")
     @Column(name = "chat_id")
@@ -26,7 +26,7 @@ public class Chat {
 
     @Column(name = "user1_id", nullable = false)
     private String user1Id;
-    
+
     @Column(name = "user2_id", nullable = false)
     private String user2Id;
 
@@ -35,5 +35,10 @@ public class Chat {
 
     @Column(name = "last_time_sent", nullable = true)
     private Timestamp lastTimeSent;
+
+    public Chat(String user1Id, String user2Id) {
+        this.user1Id = user1Id;
+        this.user2Id = user2Id;
+    }
 
 }

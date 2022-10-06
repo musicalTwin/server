@@ -1,14 +1,13 @@
 package it.musicaltwin.demo.controllers;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.musicaltwin.demo.entities.Messages;
@@ -32,9 +31,9 @@ public class MessagesController {
     }
 
     @PostMapping(path = "add-message")
-    public void addMessageToDatabase(@RequestParam Long chatId, @RequestParam String senderId,
-            @RequestParam String text, @RequestParam Timestamp dateTime) {
-        messagesService.addMessageToDatabase(chatId, senderId, text, dateTime);
-        chatController.updateLastMessage(chatId, text, dateTime);
+    public void addNewMessage(@RequestBody Messages body) {
+
+        messagesService.addMessageToDatabase(body);
+        chatController.updateLastMessage(body);
     }
 }
