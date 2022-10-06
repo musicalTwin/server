@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,20 +24,20 @@ public class ChatController {
     public ChatController(ChatService chatService) {
         this.chatService = chatService;
     }
-    
-    @PostMapping(path = "{userId}")
+
+    @GetMapping(path = "{userId}")
     public List<Chat> getUserChats(@PathVariable String userId) {
         // To show only the id of who you are chatting with
-        
+
         // for (Chat chat : chatService.getChatsOfUser(userId)) {
-        //     if (chat.getUser1Id().equals(userId)) {
-        //         System.out.println(chat.getUser2Id());
-        //     }
-        //     else if (chat.getUser2Id().equals(userId)) {
-        //         System.out.println(chat.getUser1Id());
-        //     }
+        // if (chat.getUser1Id().equals(userId)) {
+        // System.out.println(chat.getUser2Id());
         // }
-        
+        // else if (chat.getUser2Id().equals(userId)) {
+        // System.out.println(chat.getUser1Id());
+        // }
+        // }
+
         return chatService.getChatsOfUser(userId);
     }
 
@@ -46,7 +47,8 @@ public class ChatController {
     }
 
     @PostMapping(path = "update-last-message")
-    public void updateLastMessage(@RequestParam Long chatId, @RequestParam String lastMessage, @RequestParam Timestamp lastTimeSent) {
+    public void updateLastMessage(@RequestParam Long chatId, @RequestParam String lastMessage,
+            @RequestParam Timestamp lastTimeSent) {
         chatService.updateLastMessageOfChat(chatId, lastMessage, lastTimeSent);
     }
 }

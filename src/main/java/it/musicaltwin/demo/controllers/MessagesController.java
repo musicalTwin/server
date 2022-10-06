@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,13 +26,14 @@ public class MessagesController {
         this.chatController = chatController;
     }
 
-    @PostMapping(path = "{chatId}")
+    @GetMapping(path = "{chatId}")
     public List<Messages> getMessagesOfChat(@PathVariable Long chatId) {
         return messagesService.getMessagesOfChat(chatId);
     }
 
     @PostMapping(path = "add-message")
-    public void addMessageToDatabase(@RequestParam Long chatId, @RequestParam String senderId, @RequestParam String text, @RequestParam Timestamp dateTime) {
+    public void addMessageToDatabase(@RequestParam Long chatId, @RequestParam String senderId,
+            @RequestParam String text, @RequestParam Timestamp dateTime) {
         messagesService.addMessageToDatabase(chatId, senderId, text, dateTime);
         chatController.updateLastMessage(chatId, text, dateTime);
     }
