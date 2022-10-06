@@ -21,7 +21,7 @@ import it.musicaltwin.demo.services.UserService;
 import it.musicaltwin.demo.services.UsersGenresService;
 
 @RestController
-@RequestMapping(path = "api/v1/user-genres")
+@RequestMapping(path = "api/v1/users-genres")
 public class UsersGenresController {
 
     private final UsersGenresService usersGenresService;
@@ -72,10 +72,8 @@ public class UsersGenresController {
             for (var genreName : genres) {
                 Genres genre = genresService.findByName(genreName);
                 UsersGenres usersGenres = new UsersGenres(user, genre);
-                System.out.println(usersGenres);
                 usersGenresService.addToDatabase(usersGenres);
             }
         }
     }
-
 }

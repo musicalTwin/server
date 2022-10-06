@@ -43,7 +43,6 @@ public class ChatController {
 
     @PostMapping(path = "add-chat")
     public void addChatToDatabase(@RequestBody Chat chat) {
-        System.out.println(chat);
         chatService.addChatToDatabase(chat);
     }
 
