@@ -17,21 +17,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UsersArtists {
-    
+
     @Id
-    @Column(name = "artist_id")
-    @GeneratedValue(generator = "id", strategy = GenerationType.TABLE)
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
 
     @Column(name = "user_id", nullable = false)
     private String userId;
 
-    @Column(name = "artist_name", nullable = false)
-    private String artistName;
+    @Column(name = "artist_id", nullable = false)
+    private String artistId;
 
-    public UsersArtists(String userId, String artistName) {
+    public UsersArtists(String userId, String artistId) {
         this.userId = userId;
-        this.artistName = artistName;
+        this.artistId = artistId;
     }
-    
+
 }

@@ -7,12 +7,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import it.musicaltwin.demo.entities.UsersSongs;
 
-public interface UsersSongRepository extends JpaRepository<UsersSongs, Long>{
+public interface UsersSongRepository extends JpaRepository<UsersSongs, Long> {
 
     @Query(value = "SELECT song_name FROM users_songs us WHERE user_id = ?1", nativeQuery = true)
     List<String> getTopSongs(String userId);
 
-    @Query(value = "SELECT song_id FROM users_songs us WHERE us.user_id = ?1", nativeQuery = true)
+    @Query(value = "SELECT id FROM users_songs us WHERE us.user_id = ?1", nativeQuery = true)
     List<Long> findAllIdFromUserId(String id);
-    
+
 }

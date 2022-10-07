@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping(path = "api/v1/users-artists")
 public class UsersArtistsController {
-    
+
     private final UsersArtistsService usersArtistsService;
     private final UserService userService;
 
@@ -43,11 +43,12 @@ public class UsersArtistsController {
         Users user = userService.getUserInfoById(userId).orElse(null);
 
         if (user != null) {
-            
+
             if (usersArtistsService.checkIfUserInDb(user)) {
                 usersArtistsService.removeUserFromDatabase(user);
             }
 
+            System.out.println("Qua ci arriviamo");
             List<String> aritsts = body.get("artists");
             UsersArtists usersArtists;
             for (String artist : aritsts) {
