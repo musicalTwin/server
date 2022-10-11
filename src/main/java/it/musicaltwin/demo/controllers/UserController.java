@@ -19,7 +19,6 @@ import it.musicaltwin.demo.entities.Genders;
 import it.musicaltwin.demo.entities.Genres;
 import it.musicaltwin.demo.entities.InterestedIn;
 import it.musicaltwin.demo.entities.Users;
-import it.musicaltwin.demo.entities.UsersArtists;
 import it.musicaltwin.demo.entities.UsersGenres;
 import it.musicaltwin.demo.services.CardsService;
 import it.musicaltwin.demo.services.GendersService;
