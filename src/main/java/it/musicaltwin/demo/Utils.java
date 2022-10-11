@@ -6,12 +6,23 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+ 
+import org.json.simple.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.util.LinkedHashMap;
 import static java.util.stream.Collectors.toMap;
 import static java.util.Map.Entry.comparingByValue;
 
 import it.musicaltwin.demo.entities.Cards;
+import it.musicaltwin.demo.entities.UsersArtists;
+import it.musicaltwin.demo.entities.UsersSongs;
+import it.musicaltwin.demo.services.UsersArtistsService;
+import it.musicaltwin.demo.services.UsersSongService;
 
 import java.util.List;
 
@@ -93,6 +104,56 @@ public class Utils {
                 .entrySet().stream().sorted(comparingByValue())
                 .collect(toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e2, LinkedHashMap::new));
         return sorted;
+    }
+
+    public static void randId(String path, int max, String id, UsersArtistsService usersArtistsService) {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(path)) {
+            Object obj = jsonParser.parse(reader);
+            JSONArray list = (JSONArray) obj;
+
+            Long num = Utils.randomGenderId(max, 1);
+
+            for (var element : list) {
+                if (element.toString().contains("\"id\":" + num.toString())) {
+                    String artistsId = element.toString().substring(9, element.toString().indexOf("\"", 9));
+                    UsersArtists usersArtists = new UsersArtists(id, artistsId);
+                    usersArtistsService.addToDatabase(usersArtists);
+                }
+            }
+        
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void randId(String path, int max, String id, UsersSongService usersSongsService) {
+        JSONParser jsonParser = new JSONParser();
+        try (FileReader reader = new FileReader(path)) {
+            Object obj = jsonParser.parse(reader);
+            JSONArray list = (JSONArray) obj;
+
+            Long num = Utils.randomGenderId(max, 1);
+
+            for (var element : list) {
+                if (element.toString().contains("\"id\":" + num.toString())) {
+                    String SongsId = element.toString().substring(9, element.toString().indexOf("\"", 9));
+                    UsersSongs usersSongs = new UsersSongs(id, SongsId);
+                    usersSongsService.addToDatabase(usersSongs);
+                }
+            }
+        
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 }

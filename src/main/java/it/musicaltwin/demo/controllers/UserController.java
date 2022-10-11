@@ -19,13 +19,16 @@ import it.musicaltwin.demo.entities.Genders;
 import it.musicaltwin.demo.entities.Genres;
 import it.musicaltwin.demo.entities.InterestedIn;
 import it.musicaltwin.demo.entities.Users;
+import it.musicaltwin.demo.entities.UsersArtists;
 import it.musicaltwin.demo.entities.UsersGenres;
 import it.musicaltwin.demo.services.CardsService;
 import it.musicaltwin.demo.services.GendersService;
 import it.musicaltwin.demo.services.UserService;
+import it.musicaltwin.demo.services.UsersArtistsService;
 import it.musicaltwin.demo.services.GenresService;
 import it.musicaltwin.demo.services.InterestedInService;
 import it.musicaltwin.demo.services.UsersGenresService;
+import it.musicaltwin.demo.services.UsersSongService;
 
 @RestController
 @RequestMapping(path = "api/v1/users")
@@ -34,21 +37,26 @@ public class UserController {
     private final UserService userService;
     private final GendersService gendersService;
     private final CardsService cardsService;
-
     private final GenresService genresService;
     private final UsersGenresService usersGenresService;
     private final InterestedInService interestedInService;
+    private final UsersArtistsService usersArtistsService;
+    private final UsersSongService usersSongService;
 
     @Autowired
     public UserController(UserService userService, GendersService gendersService, CardsService cardsService,
             GenresService genresService, UsersGenresService usersGenresService,
-            InterestedInService interestedInService) {
+            InterestedInService interestedInService,
+            UsersArtistsService usersArtistsService,
+            UsersSongService usersSongService) {
         this.userService = userService;
         this.gendersService = gendersService;
         this.cardsService = cardsService;
         this.genresService = genresService;
         this.usersGenresService = usersGenresService;
         this.interestedInService = interestedInService;
+        this.usersArtistsService = usersArtistsService;
+        this.usersSongService = usersSongService;
     }
 
     // @Autowired
@@ -66,7 +74,8 @@ public class UserController {
 
     @GetMapping(path = "generate")
     public void generateUser() {
-        for (Integer i = 0; i < 499; i++) {
+
+        for (Integer i = 0; i < 20; i++) {
 
             String id = Utils.randomString(25);
             String username = Utils.randomString(6);
@@ -93,8 +102,16 @@ public class UserController {
                 usersGenresService.addToDatabase(usersGenres);
             }
 
-        }
+            // Random top artists
+            for (Long j = 0L; j < 20; j++) {
+                Utils.randId("server/sample_data/artists-unique.json", 3969, id, usersArtistsService);
+            }
 
+            // Random top songs
+            for (Long j = 0L; j < 20; j++) {
+                Utils.randId("server/sample_data/songs-unique.json", 13154, id, usersSongService);
+            }
+        }
     }
 
     @GetMapping(path = "{userId}")
