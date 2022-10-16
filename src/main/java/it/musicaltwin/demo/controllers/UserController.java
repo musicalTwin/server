@@ -74,7 +74,7 @@ public class UserController {
     @GetMapping(path = "generate")
     public void generateUser() {
 
-        for (Integer i = 0; i < 20; i++) {
+        for (Integer i = 0; i < 49; i++) {
 
             String id = Utils.randomString(25);
             String username = Utils.randomString(6);
@@ -100,6 +100,8 @@ public class UserController {
                 UsersGenres usersGenres = new UsersGenres(newUser, genre);
                 usersGenresService.addToDatabase(usersGenres);
             }
+
+            System.out.println(newUser);
 
             // Random top artists
             for (Long j = 0L; j < 20; j++) {

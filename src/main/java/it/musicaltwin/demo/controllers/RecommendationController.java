@@ -12,6 +12,7 @@ import it.musicaltwin.demo.services.InterestedInService;
 import it.musicaltwin.demo.services.MatchService;
 import it.musicaltwin.demo.services.UserService;
 import it.musicaltwin.demo.services.UsersArtistsService;
+import it.musicaltwin.demo.services.UsersGenresService;
 import it.musicaltwin.demo.services.UsersSongService;
 
 import java.util.ArrayList;
@@ -35,20 +36,19 @@ public class RecommendationController {
     private final MatchService matchService;
     private final UsersArtistsService usersArtistsService;
     private final UsersSongService usersSongService;
-
-    private final UsersGenresController usersGenresController;
+    private final UsersGenresService usersGenresService;
 
     @Autowired
     public RecommendationController(
             UserService userService,
-            UsersGenresController usersGenresController,
+            UsersGenresService usersGenresService,
             CardsService cardsService,
             InterestedInService interestedInService,
             MatchService matchService,
             UsersArtistsService usersArtistsService,
             UsersSongService usersSongService) {
         this.userService = userService;
-        this.usersGenresController = usersGenresController;
+        this.usersGenresService = usersGenresService;
         this.cardsService = cardsService;
         this.interestedInService = interestedInService;
         this.matchService = matchService;
@@ -69,7 +69,7 @@ public class RecommendationController {
         }
 
         // List of genres that the user who started the search listen to
-        List<String> searcherListenedGenres = usersGenresController.getListenedGenres(userId);
+        List<String> searcherListenedGenres = usersGenresService.getListenedGenres(userId);
 
         // List of top artists of the user who started the search
         List<String> searcherTopArtists = usersArtistsService.getTopArtists(userId);
@@ -89,8 +89,9 @@ public class RecommendationController {
         // Eventual list of cards of user with similar musical taste
         Map<Cards, Double> matchedUser = new HashMap<Cards, Double>();
 
-        Integer total = 0, tempTotal = 0, present = 0;
-        float average = 0;
+        Integer tempTotal = 0, present = 0;
+        double average = 0.000;
+        short diff = 0;
 
         // For every user in the db other than themselves
         List<Users> users = userService.getUsers();
@@ -113,45 +114,62 @@ public class RecommendationController {
                     average = 0;
 
                     // Getting listened genres of current user
-                    searchedUserGenres = usersGenresController.getListenedGenres(currUser.getId());
+                    searchedUserGenres = usersGenresService.getListenedGenres(currUser.getId());
 
                     // Getting top artists of current user
                     searchedUserArtists = usersArtistsService.getTopArtists(currUser.getId());
 
                     // Getting top songs of current user
                     searchedUserSongs = usersSongService.getTopSongs(currUser.getId());
-                    
+
+                    // Genres list of the 2 user of same size
+                    if (searcherListenedGenres.size() > searchedUserGenres.size()) {
+                        diff = (short) (searcherListenedGenres.size() - searchedUserGenres.size());
+                        
+                        for (short k = 0; k < diff; k++) {
+                            searchedUserGenres.add("");
+                        }
+                        
+                    } else {
+                        diff = (short) (searchedUserGenres.size() - searcherListenedGenres.size());
+                        
+                        for (short k = 0; k < diff; k++) {
+                            searcherListenedGenres.add("");
+                        }
+                    }
                     // Calculating how much the lists of genres match
-                    tempTotal = searcherListenedGenres.size();
-                    for (Long j = 0L; j < tempTotal; j++, total++) {
-                        if (searchedUserGenres.contains(searcherListenedGenres.get(j.intValue()))) {
+                    tempTotal = searchedUserGenres.size();
+                    for (Long j = 0L; j < tempTotal; j++) {
+                        if (searcherListenedGenres.contains(searchedUserGenres.get(j.intValue()))) {
                             present++;
                         }
                     }
-                    average = (present / tempTotal) * 100;
+                    average = ((double)present / tempTotal) * 100;
 
                     // Calculating how much the lists of top artists match
-                    tempTotal = searchedUserArtists.size();
+                    tempTotal = searcherTopArtists.size();
                     present = 0;
-                    for (Long j = 0L; j < tempTotal; j++, total++) {
+                    for (Long j = 0L; j < tempTotal; j++) {
                         if (searchedUserArtists.contains(searcherTopArtists.get(j.intValue()))) {
                             present++;
                         }
                     }
-                    average += (present / tempTotal) * 100;
+                    average += ((double)present / tempTotal) * 100;
 
                     // Calculating how much the lists of top songs match
-                    tempTotal = searchedUserSongs.size();
+                    tempTotal = searcherTopSongs.size();
                     present = 0;
-                    for (Long j = 0L; j < tempTotal; j++, total++) {
+                    for (Long j = 0L; j < tempTotal; j++) {
                         if (searchedUserSongs.contains(searcherTopSongs.get(j.intValue()))) {
                             present++;
                         }
                     }
-                    average += (present / tempTotal) * 100;
+                    average += ((double)present / tempTotal) * 100;
 
                     // Matched user with percentage of matching
-                    matchedUser.put(currUserCard, (double) average);
+                    matchedUser.put(currUserCard, average);
+                    System.out.println(currUser.getId() + "\n" + average);
+
                 }
                 // If somebody sent a request to text you
                 else {
@@ -159,7 +177,7 @@ public class RecommendationController {
                 }
             }
         }
-        
+
         // Sorting the HashMap by the percentage of matching and casting to List
         matchedUser = Utils.sortByValue(matchedUser);
         List<Cards> matchedUserList = new ArrayList<Cards>(matchedUser.keySet());
@@ -169,7 +187,7 @@ public class RecommendationController {
         for (Integer i = 0; i < requestSender.size(); i++) {
             matchedUserList.add(i, requestSender.get(i));
         }
-        
+
         return matchedUserList;
     }
 }
