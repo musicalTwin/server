@@ -19,7 +19,7 @@ public class UsersGenresService {
         this.usersGenresRepository = usersGenresRepository;
     }
 
-    public List<UsersGenres> getListenedGenres(String userId) {
+    public List<String> getListenedGenres(String userId) {
         return usersGenresRepository.findListenedGenres(userId);
     }
 
