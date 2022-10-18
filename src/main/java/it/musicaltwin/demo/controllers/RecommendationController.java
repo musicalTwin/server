@@ -90,7 +90,8 @@ public class RecommendationController {
         Map<Cards, Double> matchedUser = new HashMap<Cards, Double>();
 
         Integer total = 0, tempTotal = 0, present = 0;
-        float average = 0;
+        double average = 0;
+        short diff = 0;
 
         // For every user in the db other than themselves
         List<Users> users = userService.getUsers();
@@ -121,6 +122,22 @@ public class RecommendationController {
                     // Getting top songs of current user
                     searchedUserSongs = usersSongService.getTopSongs(currUser.getId());
 
+                    // Genres list of the 2 user of same size
+                    if (searcherListenedGenres.size() > searchedUserGenres.size()) {
+                        diff = (short) (searcherListenedGenres.size() - searchedUserGenres.size());
+
+                        for (short k = 0; k < diff; k++) {
+                            searchedUserGenres.add("");
+                        }
+
+                    } else {
+                        diff = (short) (searchedUserGenres.size() - searcherListenedGenres.size());
+
+                        for (short k = 0; k < diff; k++) {
+                            searcherListenedGenres.add("");
+                        }
+                    }
+
                     // Calculating how much the lists of genres match
                     tempTotal = searcherListenedGenres.size();
                     for (Long j = 0L; j < tempTotal; j++, total++) {
@@ -128,7 +145,7 @@ public class RecommendationController {
                             present++;
                         }
                     }
-                    average = (present / tempTotal) * 100;
+                    average = ((double) present / tempTotal) * 100;
 
                     // Calculating how much the lists of top artists match
                     tempTotal = searchedUserArtists.size();
@@ -143,7 +160,7 @@ public class RecommendationController {
                             System.out.println("Artists\nUser id " + userId + "\nJ: " + j + "\n");
                         }
                     }
-                    average += (present / tempTotal) * 100;
+                    average += ((double) present / tempTotal) * 100;
 
                     // Calculating how much the lists of top songs match
                     tempTotal = searchedUserSongs.size();
@@ -157,7 +174,7 @@ public class RecommendationController {
                             System.out.println("Songs\nUser id " + userId + "\nJ: " + j + "\n");
                         }
                     }
-                    average += (present / tempTotal) * 100;
+                    average += ((double) present / tempTotal) * 100;
 
                     // Matched user with percentage of matching
                     matchedUser.put(currUserCard, (double) average);
@@ -178,6 +195,7 @@ public class RecommendationController {
         for (Integer i = 0; i < requestSender.size(); i++) {
             matchedUserList.add(i, requestSender.get(i));
         }
+        System.out.println(matchedUser);
 
         return matchedUserList;
     }
