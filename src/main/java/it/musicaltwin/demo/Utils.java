@@ -9,7 +9,7 @@ import java.util.Map;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
- 
+
 import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -115,14 +115,16 @@ public class Utils {
             Long num = Utils.randomGenderId(max, 1);
 
             for (var element : list) {
-                if (element.toString().contains("\"id\":" + num.toString())) {
+                if (element.toString().contains("\"id\":" + num.toString() + "}")) {
                     String artistsId = element.toString().substring(9, element.toString().indexOf("\"", 9));
                     UsersArtists usersArtists = new UsersArtists(id, artistsId);
                     usersArtistsService.addToDatabase(usersArtists);
                 }
             }
-        
-        } catch (FileNotFoundException e) {
+
+        } catch (
+
+        FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
@@ -140,13 +142,13 @@ public class Utils {
             Long num = Utils.randomGenderId(max, 1);
 
             for (var element : list) {
-                if (element.toString().contains("\"id\":" + num.toString())) {
+                if (element.toString().contains("\"id\":" + num.toString() + "}")) {
                     String SongsId = element.toString().substring(9, element.toString().indexOf("\"", 9));
                     UsersSongs usersSongs = new UsersSongs(id, SongsId);
                     usersSongsService.addToDatabase(usersSongs);
                 }
             }
-        
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

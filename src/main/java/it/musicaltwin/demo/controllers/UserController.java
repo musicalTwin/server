@@ -68,13 +68,14 @@ public class UserController {
 
     @GetMapping
     public List<Users> getUsers() {
+        System.out.println(System.getProperty("user.dir"));
         return userService.getUsers();
     }
 
     @GetMapping(path = "generate")
     public void generateUser() {
 
-        for (Integer i = 0; i < 20; i++) {
+        for (Integer i = 0; i < 199; i++) {
 
             String id = Utils.randomString(25);
             String username = Utils.randomString(6);
@@ -99,17 +100,14 @@ public class UserController {
 
                 UsersGenres usersGenres = new UsersGenres(newUser, genre);
                 usersGenresService.addToDatabase(usersGenres);
-            }
 
-            // Random top artists
-            for (Long j = 0L; j < 20; j++) {
-                Utils.randId("server/sample_data/artists-unique.json", 3969, id, usersArtistsService);
-            }
+                // Random top artists
+                Utils.randId(".\\demo\\sample_data\\artists-unique.json", 3969, id, usersArtistsService);
 
-            // Random top songs
-            for (Long j = 0L; j < 20; j++) {
-                Utils.randId("server/sample_data/songs-unique.json", 13154, id, usersSongService);
+                // Random top songs
+                Utils.randId(".\\demo\\sample_data\\songs-unique.json", 13154, id, usersSongService);
             }
+            System.out.println("Aggiunti " + (i + 1) + " utenti");
         }
     }
 

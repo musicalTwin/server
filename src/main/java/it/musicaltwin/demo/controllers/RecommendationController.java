@@ -62,7 +62,7 @@ public class RecommendationController {
         List<InterestedIn> intrestedIn = interestedInService.findByUserId(userId);
         List<Genders> intrestedInGenders = new ArrayList<Genders>();
         List<Cards> requestSender = new ArrayList<Cards>();
-        
+
         // Genders in which the user is interested in
         for (var gender : intrestedIn) {
             intrestedInGenders.add(gender.getGender());
@@ -102,10 +102,10 @@ public class RecommendationController {
 
             // If the current user is not yourself
             if ((!currUser.getId().equals(userId)) &&
-                // If the current user is the gender you are interested in
-                intrestedInGenders.contains(currUser.getGender()) &&
-                // If you don't have already matched the user
-                (!cardsId.contains(currUserCard.getId()))) {
+            // If the current user is the gender you are interested in
+                    intrestedInGenders.contains(currUser.getGender()) &&
+                    // If you don't have already matched the user
+                    (!cardsId.contains(currUserCard.getId()))) {
                 // If nobody sent a request to text you
                 if (matchService.test(currUser.getId(), cardsService.findByUserId(userId).getId())) {
 
@@ -120,7 +120,7 @@ public class RecommendationController {
 
                     // Getting top songs of current user
                     searchedUserSongs = usersSongService.getTopSongs(currUser.getId());
-                    
+
                     // Calculating how much the lists of genres match
                     tempTotal = searcherListenedGenres.size();
                     for (Long j = 0L; j < tempTotal; j++, total++) {
@@ -134,8 +134,13 @@ public class RecommendationController {
                     tempTotal = searchedUserArtists.size();
                     present = 0;
                     for (Long j = 0L; j < tempTotal; j++, total++) {
-                        if (searchedUserArtists.contains(searcherTopArtists.get(j.intValue()))) {
-                            present++;
+                        try {
+                            if (searchedUserArtists.contains(searcherTopArtists.get(j.intValue()))) {
+                                present++;
+                            }
+
+                        } catch (Exception e) {
+                            System.out.println("Artists\nUser id " + userId + "\nJ: " + j + "\n");
                         }
                     }
                     average += (present / tempTotal) * 100;
@@ -144,8 +149,12 @@ public class RecommendationController {
                     tempTotal = searchedUserSongs.size();
                     present = 0;
                     for (Long j = 0L; j < tempTotal; j++, total++) {
-                        if (searchedUserSongs.contains(searcherTopSongs.get(j.intValue()))) {
-                            present++;
+                        try {
+                            if (searchedUserSongs.contains(searcherTopSongs.get(j.intValue()))) {
+                                present++;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Songs\nUser id " + userId + "\nJ: " + j + "\n");
                         }
                     }
                     average += (present / tempTotal) * 100;
@@ -159,7 +168,7 @@ public class RecommendationController {
                 }
             }
         }
-        
+
         // Sorting the HashMap by the percentage of matching and casting to List
         matchedUser = Utils.sortByValue(matchedUser);
         List<Cards> matchedUserList = new ArrayList<Cards>(matchedUser.keySet());
@@ -169,7 +178,7 @@ public class RecommendationController {
         for (Integer i = 0; i < requestSender.size(); i++) {
             matchedUserList.add(i, requestSender.get(i));
         }
-        
+
         return matchedUserList;
     }
 }
