@@ -195,7 +195,6 @@ public class RecommendationController {
         for (Integer i = 0; i < requestSender.size(); i++) {
             matchedUserList.add(i, requestSender.get(i));
         }
-        System.out.println(matchedUser);
 
         return matchedUserList;
     }

@@ -1,5 +1,6 @@
 package it.musicaltwin.demo.controllers;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,7 +69,6 @@ public class UserController {
 
     @GetMapping
     public List<Users> getUsers() {
-        System.out.println(System.getProperty("user.dir"));
         return userService.getUsers();
     }
 
@@ -139,4 +139,8 @@ public class UserController {
         userService.updateUser(userId, username, genderId);
     }
 
+    @GetMapping(path = "cls")
+    public void clearScreen() throws InterruptedException, IOException {
+        new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+    }
 }
