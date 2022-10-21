@@ -38,8 +38,12 @@ public class UsersGenresController {
     }
 
     @GetMapping(path = "{userId}")
-    public List<String> getListenedGenres(@PathVariable("userId") String userId) {
+    public List<UsersGenres> getListenedGenders(@PathVariable("userId") String userId) {
         return usersGenresService.getListenedGenres(userId);
+    }
+
+    public List<String> getListenedGenresId(@PathVariable("userId") String userId) {
+        return usersGenresService.getListenedGenresId(userId);
     }
 
     @PostMapping

@@ -69,7 +69,7 @@ public class RecommendationController {
         }
 
         // List of genres that the user who started the search listen to
-        List<String> searcherListenedGenres = usersGenresController.getListenedGenres(userId);
+        List<String> searcherListenedGenres = usersGenresController.getListenedGenresId(userId);
 
         // List of top artists of the user who started the search
         List<String> searcherTopArtists = usersArtistsService.getTopArtists(userId);
@@ -114,7 +114,7 @@ public class RecommendationController {
                     average = 0;
 
                     // Getting listened genres of current user
-                    searchedUserGenres = usersGenresController.getListenedGenres(currUser.getId());
+                    searchedUserGenres = usersGenresController.getListenedGenresId(currUser.getId());
 
                     // Getting top artists of current user
                     searchedUserArtists = usersArtistsService.getTopArtists(currUser.getId());

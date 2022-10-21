@@ -19,8 +19,8 @@ public class UsersGenresService {
         this.usersGenresRepository = usersGenresRepository;
     }
 
-    public List<String> getListenedGenres(String userId) {
-        return usersGenresRepository.findListenedGenres(userId);
+    public List<String> getListenedGenresId(String userId) {
+        return usersGenresRepository.findListenedGenresId(userId);
     }
 
     public void addToDatabase(UsersGenres usersGenres) {
@@ -35,6 +35,10 @@ public class UsersGenresService {
     public Boolean checkIfUserInDb(Users user) {
         List<Long> usersGenres = usersGenresRepository.findAllIdFromUserId(user.getId());
         return !usersGenres.isEmpty();
+    }
+
+    public List<UsersGenres> getListenedGenres(String userId) {
+        return usersGenresRepository.findListenedGenres(userId);
     }
 
 }
