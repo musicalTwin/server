@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.stream.Stream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -86,6 +86,19 @@ public class Utils {
 
     static final String AB = "0123456789abcdefghijklmnopqrstuvwxyz";
     static SecureRandom rnd = new SecureRandom();
+
+    public static String randomName(Long genderId) {
+        List<String> nomiMaschili = Arrays.asList("Carlo", "Mario", "Paolo", "Francesco", "Giovanni", "Mauro",
+                "Stefano", "Vladi");
+        List<String> nomiFemminili = Arrays.asList("Giovanna", "Francesca", "Giulia", "Marta", "Gabriella", "Maria",
+                "Paola", "Camilla");
+
+        List<String> nomi = new ArrayList<String>(nomiMaschili);
+        nomi.addAll(nomiFemminili);
+
+        List<String> listpick = genderId == 1 ? nomiMaschili : genderId == 2 ? nomiFemminili : nomi;
+        return listpick.get(rnd.nextInt(listpick.size()));
+    }
 
     public static String randomString(int len) {
         StringBuilder sb = new StringBuilder(len);

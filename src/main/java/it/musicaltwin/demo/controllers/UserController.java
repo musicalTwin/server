@@ -75,12 +75,12 @@ public class UserController {
     @GetMapping(path = "generate")
     public void generateUser() {
 
-        for (Integer i = 0; i < 199; i++) {
+        for (Integer i = 0; i < 399; i++) {
 
             String id = Utils.randomString(25);
-            String username = Utils.randomString(6);
             Genders gender = gendersService.getById(Utils.randomGenderId(5,
                     1)).orElse(new Genders());
+            String username = Utils.randomName(gender.getId());
 
             Users newUser = new Users(id, username, gender);
             addUserToDatabase(newUser);
@@ -102,12 +102,13 @@ public class UserController {
                 usersGenresService.addToDatabase(usersGenres);
 
                 // Random top artists
-                Utils.randId(".\\demo\\sample_data\\artists-unique.json", 3969, id, usersArtistsService);
+                Utils.randId("./sample_data/artists-unique.json", 3969, id, usersArtistsService);
 
                 // Random top songs
-                Utils.randId(".\\demo\\sample_data\\songs-unique.json", 13154, id, usersSongService);
+                Utils.randId("./sample_data/songs-unique.json", 13154, id, usersSongService);
             }
             System.out.println("Aggiunti " + (i + 1) + " utenti");
+            System.out.println(username);
         }
     }
 
